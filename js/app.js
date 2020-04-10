@@ -12,6 +12,10 @@ let nameInputFlag = 0;
 let chosenCharacter;
 let chosenName;
 
+let initialPlayerLives = 3;
+let score = 0;
+let highScore = 0;
+
 /***************************************/
 /************** Functions **************/
 /***************************************/
@@ -77,6 +81,7 @@ startGameBtn.addEventListener("click", () => {
 	clearScreen();
 	toggleNameInput();
 	chosenName = playerNameInput.value;
+	player.init();
 });
 
 /***************************************/
@@ -118,5 +123,56 @@ class Game {
 	}
 }
 
+class Player {
+	constructor(x, y, step) {
+		this.x = x;
+		this.y = y;
+		this.step = step;
+	}
+
+	drawPlayer() {
+		ctx.fillStyle = "red";
+		ctx.fillRect(this.x, this.y, 20, 20);
+	}
+
+	moveLeft() {
+		if (this.x - this.step < 0) {
+			this.x = 0;
+		} else {
+			this.x -= this.step;
+		}
+
+		clearScreen();
+		player.drawPlayer();
+	}
+
+	moveRight() {
+		if (this.x + this.step > gameArea.width) {
+			this.x = gameArea.width;
+		} else {
+			this.x += this.step;
+		}
+
+		clearScreen();
+		player.drawPlayer();
+	}
+
+	init() {
+		this.drawPlayer();
+		window.addEventListener(
+			'keydown',
+			function (e) {
+				if (e.keyCode === 37) {
+					this.moveLeft();
+				} else if (e.keyCode === 39) {
+					this.moveRight();
+				}
+			}.bind(this)
+		);
+	}
+}
+
 let game = new Game();
 game.displayWelcomeMessage();
+
+let player = new Player(300, 300, 5);
