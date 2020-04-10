@@ -5,8 +5,10 @@ const ctx = gameArea.getContext('2d');
 const welcomeText = "Welcome to Aqua Shot";
 const gameOverText = "Game Over";
 const characterText = "Choose a character";
+const playerNameText = "Enter your name";
 
 let characterFlag = 0;
+let nameInputFlag = 0;
 let chosenCharacter;
 
 /***************************************/
@@ -30,6 +32,21 @@ const toggleCharacters = () => {
 	}
 };
 
+const toggleNameInput = () => {
+	if (nameInputFlag == 0) {
+		playerName.style.display = "block";
+		nameInputFlag = 1;
+	} else {
+		playerName.style.display = "none";
+		nameInputFlag = 0;
+	}
+}
+
+const showPlayerNameScreen = () => {
+	toggleNameInput();
+	game.displayPlayerNameMessage();
+};
+
 /***************************************/
 /*************** Events ****************/
 /***************************************/
@@ -45,12 +62,14 @@ character1.addEventListener("click", () => {
 	chosenCharacter = 1;
 	clearScreen();
 	toggleCharacters();
+	showPlayerNameScreen();
 });
 
 character2.addEventListener("click", () => {
 	chosenCharacter = 2;
 	clearScreen();
 	toggleCharacters();
+	showPlayerNameScreen();
 });
 
 /***************************************/
@@ -82,6 +101,13 @@ class Game {
 		ctx.textAlign = "center";
 		ctx.fillStyle = "white";
 		ctx.fillText(characterText, gameArea.width / 2, (gameArea.height / 2) - 100);
+	}
+
+	displayPlayerNameMessage = () => {
+		ctx.font = "4em 'Permanent Marker'";
+		ctx.textAlign = "center";
+		ctx.fillStyle = "white";
+		ctx.fillText(playerNameText, gameArea.width / 2, (gameArea.height / 2) - 100);
 	}
 }
 

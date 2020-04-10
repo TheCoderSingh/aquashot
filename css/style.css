@@ -64,3 +64,22 @@ video {
 .character img {
 	max-height: 150px;
 }
+
+/***************************************/
+/************* Player Name *************/
+/***************************************/
+#playerName {
+	display: none;
+	position: absolute;
+	left: calc(50vw - 134px);
+	top: calc(50vh + 20px);
+}
+
+#playerName input {
+	height: 40px;
+	width: 200px;
+}
+
+#startGameBtn {
+	height: 40px;
+}
