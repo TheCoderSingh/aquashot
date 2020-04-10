@@ -10,6 +10,7 @@ const playerNameText = "Enter your name";
 let characterFlag = 0;
 let nameInputFlag = 0;
 let chosenCharacter;
+let chosenName;
 
 /***************************************/
 /************** Functions **************/
@@ -75,6 +76,7 @@ character2.addEventListener("click", () => {
 startGameBtn.addEventListener("click", () => {
 	clearScreen();
 	toggleNameInput();
+	chosenName = playerNameInput.value;
 });
 
 /***************************************/
