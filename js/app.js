@@ -240,9 +240,9 @@ class Enemy {
 		let randomEnemy = Math.floor(Math.random() * 2) + 1
 
 		if (randomEnemy === 1)
-			enemy.src = "../images/crab.jpg";
+			enemy.src = "../images/crab.png";
 		else if (randomEnemy === 2)
-			enemy.src = "../images/crab.jpg";
+			enemy.src = "../images/crab.png";
 	}
 }
 
