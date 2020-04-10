@@ -131,8 +131,16 @@ class Player {
 	}
 
 	drawPlayer() {
-		ctx.fillStyle = "red";
-		ctx.fillRect(this.x, this.y, 20, 20);
+		let character = new Image();
+
+		character.onload = () => {
+			ctx.drawImage(character, this.x, this.y, 100, 100);
+		}
+
+		if (chosenCharacter === 1)
+			character.src = "../images/character1.png";
+		else if (chosenCharacter === 2)
+			character.src = "../images/character2.png";
 	}
 
 	moveLeft() {
