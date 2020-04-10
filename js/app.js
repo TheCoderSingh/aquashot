@@ -12,8 +12,6 @@ let nameInputFlag = 0;
 let chosenCharacter;
 let chosenName;
 
-let initialPlayerLives = 3;
-let score = 0;
 let highScore = 0;
 
 /***************************************/
@@ -124,10 +122,13 @@ class Game {
 }
 
 class Player {
-	constructor(x, y, step) {
+	constructor(x, y, step, level, score, lives) {
 		this.x = x;
 		this.y = y;
 		this.step = step;
+		this.level = level;
+		this.score = score;
+		this.lives = lives;
 	}
 
 	drawPlayer() {
@@ -183,4 +184,4 @@ class Player {
 let game = new Game();
 game.displayWelcomeMessage();
 
-let player = new Player(400, 470, 5);
+let player = new Player(400, 470, 5, 1, 0, 3);
