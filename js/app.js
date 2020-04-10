@@ -183,4 +183,4 @@ class Player {
 let game = new Game();
 game.displayWelcomeMessage();
 
-let player = new Player(300, 300, 5);
+let player = new Player(400, 470, 5);
