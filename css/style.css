@@ -4,22 +4,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
 /***************************************/
-/********** Background Video ***********/
+/**************** Body *****************/
 /***************************************/
 main {
-	position: relative;
 	height: 100vh;
 	overflow: hidden;
 }
 
+/***************************************/
+/********** Background Video ***********/
+/***************************************/
 video {
 	position: absolute;
+	z-index: -1;
+	left: 0;
 }
 
 /***************************************/
-/************* Game Title **************/
+/************** Game Area **************/
 /***************************************/
-#gameTitle h1 {
-	color: #fff;
-	font-family: 'Permanent Marker', cursive;
+#gameContainer {
+	position: relative;
+}
+
+#gameArea {
+	width: 70%;
+	margin: 0 auto;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+/***************************************/
+/************* Play Button *************/
+/***************************************/
+.btn {
+	margin: 0 auto;
+}
+
+.btn button {
+	height: 60px;
+	width: 120px;
+	font-size: 36px;
 }
