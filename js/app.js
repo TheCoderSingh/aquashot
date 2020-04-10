@@ -6,6 +6,22 @@ const welcomeText = "Welcome to Aqua Shot";
 const gameOverText = "Game Over";
 
 /***************************************/
+/************** Functions **************/
+/***************************************/
+const clearScreen = () => {
+	ctx.clearRect(0, 0, gameArea.width, gameArea.height);
+};
+
+/***************************************/
+/*************** Events ****************/
+/***************************************/
+playBtn.addEventListener("click", () => {
+	clearScreen();
+	playBtn.remove();
+	// showCharacterScreen();
+});
+
+/***************************************/
 /************ Game Objects *************/
 /***************************************/
 
