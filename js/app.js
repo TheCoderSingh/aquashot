@@ -7,6 +7,7 @@ const gameOverText = "Game Over";
 const characterText = "Choose a character";
 
 let characterFlag = 0;
+let chosenCharacter;
 
 /***************************************/
 /************** Functions **************/
@@ -19,6 +20,16 @@ const showCharacterScreen = () => {
 	game.displayCharacterMessage();
 };
 
+const toggleCharacters = () => {
+	if (characterFlag == 0) {
+		characters.style.display = "block";
+		characterFlag = 1;
+	} else {
+		characters.style.display = "none";
+		characterFlag = 0;
+	}
+};
+
 /***************************************/
 /*************** Events ****************/
 /***************************************/
@@ -27,13 +38,19 @@ playBtn.addEventListener("click", () => {
 	playBtn.remove();
 	showCharacterScreen();
 
-	if (characterFlag == 0) {
-		characters.style.display = "block";
-		characterFlag = 1;
-	} else {
-		characters.style.display = "none";
-		characterFlag = 0;
-	}
+	toggleCharacters();
+});
+
+character1.addEventListener("click", () => {
+	chosenCharacter = 1;
+	clearScreen();
+	toggleCharacters();
+});
+
+character2.addEventListener("click", () => {
+	chosenCharacter = 2;
+	clearScreen();
+	toggleCharacters();
 });
 
 /***************************************/
