@@ -11,14 +11,18 @@ let characterFlag = 0;
 let nameInputFlag = 0;
 let chosenCharacter;
 let chosenName;
-
 let highScore = 0;
+let enemies = [];
+
+const stepMax = 8;
+const stepMin = 3;
 
 /***************************************/
 /************** Functions **************/
 /***************************************/
 const clearScreen = () => {
 	ctx.clearRect(0, 0, gameArea.width, gameArea.height);
+	redraw();
 };
 
 const showCharacterScreen = () => {
@@ -50,6 +54,39 @@ const showPlayerNameScreen = () => {
 	game.displayPlayerNameMessage();
 };
 
+const startEnemies = () => {
+	setInterval(() => {
+		const prob = Math.floor(Math.random() * 10);
+
+		if (prob < 2) {
+			enemies.push(new Enemy());
+		}
+	}, 800);
+
+	setInterval(() => {
+		for (let i = 0; i < enemies.length; i++) {
+			enemies[i].moveDown();
+		}
+
+		clearScreen();
+	}, 100);
+
+}
+
+const redraw = () => {
+	player.drawPlayer();
+
+	for (let i = 0; i < enemies.length; i++) {
+		let enemyPosY = enemies[i].y;
+
+		if (enemyPosY >= gameArea.height) {
+			enemies.splice(i, 1);
+		} else {
+			enemies[i].drawEnemy();
+		}
+	}
+}
+
 /***************************************/
 /*************** Events ****************/
 /***************************************/
@@ -80,6 +117,7 @@ startGameBtn.addEventListener("click", () => {
 	toggleNameInput();
 	chosenName = playerNameInput.value;
 	player.init();
+	startEnemies();
 });
 
 /***************************************/
@@ -129,13 +167,14 @@ class Player {
 		this.level = level;
 		this.score = score;
 		this.lives = lives;
+		this.size = 100;
 	}
 
 	drawPlayer() {
 		let character = new Image();
 
 		character.onload = () => {
-			ctx.drawImage(character, this.x, this.y, 100, 100);
+			ctx.drawImage(character, this.x, this.y, this.size, this.size);
 		}
 
 		if (chosenCharacter === 1)
@@ -152,18 +191,16 @@ class Player {
 		}
 
 		clearScreen();
-		player.drawPlayer();
 	}
 
 	moveRight() {
-		if (this.x + this.step + 100 > gameArea.width) {
-			this.x = gameArea.width - 100;
+		if (this.x + this.step + this.size > gameArea.width) {
+			this.x = gameArea.width - this.size;
 		} else {
 			this.x += this.step;
 		}
 
 		clearScreen();
-		player.drawPlayer();
 	}
 
 	init() {
@@ -178,6 +215,34 @@ class Player {
 				}
 			}.bind(this)
 		);
+	}
+}
+
+class Enemy {
+	constructor() {
+		this.size = 100;
+		this.x = Math.floor(Math.random() * (gameArea.width - this.size));
+		this.y = 0;
+		this.step = Math.floor(Math.random() * (stepMax - stepMin + 1)) + stepMin;
+	}
+
+	moveDown() {
+		this.y += this.step;
+	}
+
+	drawEnemy() {
+		let enemy = new Image();
+
+		enemy.onload = () => {
+			ctx.drawImage(enemy, this.x, this.y, this.size, this.size);
+		}
+
+		let randomEnemy = Math.floor(Math.random() * 2) + 1
+
+		if (randomEnemy === 1)
+			enemy.src = "../images/crab.jpg";
+		else if (randomEnemy === 2)
+			enemy.src = "../images/crab.jpg";
 	}
 }
 
