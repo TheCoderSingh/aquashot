@@ -72,6 +72,11 @@ character2.addEventListener("click", () => {
 	showPlayerNameScreen();
 });
 
+startGameBtn.addEventListener("click", () => {
+	clearScreen();
+	toggleNameInput();
+});
+
 /***************************************/
 /************ Game Objects *************/
 /***************************************/
