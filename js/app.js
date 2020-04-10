@@ -155,8 +155,8 @@ class Player {
 	}
 
 	moveRight() {
-		if (this.x + this.step > gameArea.width) {
-			this.x = gameArea.width;
+		if (this.x + this.step + 100 > gameArea.width) {
+			this.x = gameArea.width - 100;
 		} else {
 			this.x += this.step;
 		}

@@ -29,7 +29,7 @@ video {
 
 #gameArea {
 	width: 70%;
-	margin: 0 auto;
+	margin: 30vh auto 0 auto;
 	position: absolute;
 	top: 0;
 	bottom: 0;
