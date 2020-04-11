@@ -7,6 +7,26 @@ const gameOverText = "Game Over";
 const characterText = "Choose a character";
 const playerNameText = "Enter your name";
 
+let enemyImage = new Image();
+enemyImage.src = "../images/crab.png";
+enemyImage.onload = function () { this.ready = true };
+
+let pizzaImage = new Image();
+pizzaImage.src = "../images/pizza.png";
+pizzaImage.onload = function () { this.ready = true };
+
+let heartImage = new Image();
+heartImage.src = "../images/heart.png";
+heartImage.onload = function () { this.ready = true };
+
+let char1Image = new Image();
+char1Image.src = "../images/character1.png";
+char1Image.onload = function () { this.ready = true };
+
+let char2Image = new Image();
+char2Image.src = "../images/character2.png";
+char2Image.onload = function () { this.ready = true };
+
 let characterFlag = 0;
 let nameInputFlag = 0;
 let chosenCharacter;
@@ -299,16 +319,15 @@ class Player {
 	}
 
 	drawPlayer() {
-		let character = new Image();
-
-		character.onload = () => {
-			ctx.drawImage(character, this.x, this.y, this.size, this.size);
+		if (chosenCharacter === 1) {
+			if (char1Image.ready) {
+				ctx.drawImage(char1Image, this.x, this.y, this.size, this.size);
+			}
+		} else if (chosenCharacter === 2) {
+			if (char2Image.ready) {
+				ctx.drawImage(char2Image, this.x, this.y, this.size, this.size);
+			}
 		}
-
-		if (chosenCharacter === 1)
-			character.src = "../images/character1.png";
-		else if (chosenCharacter === 2)
-			character.src = "../images/character2.png";
 	}
 
 	moveLeft() {
@@ -362,18 +381,11 @@ class Enemy {
 	}
 
 	drawEnemy() {
-		let enemy = new Image();
-
-		enemy.onload = () => {
-			ctx.drawImage(enemy, this.x, this.y, this.size, this.size);
+		if (enemyImage.ready) {
+			ctx.drawImage(enemyImage, this.x, this.y, this.size, this.size);
 		}
 
-		randomEnemy = Math.floor(Math.random() * 2) + 1
-
-		if (randomEnemy === 1)
-			enemy.src = "../images/crab.png";
-		else if (randomEnemy === 2)
-			enemy.src = "../images/crab.png";
+		// requestAnimationFrame(this.drawEnemy);
 	}
 }
 
@@ -391,14 +403,9 @@ class Item {
 	}
 
 	drawItem() {
-		let item = new Image();
-
-		item.onload = () => {
-			ctx.drawImage(item, this.x, this.y, this.size, this.size);
+		if (pizzaImage.ready) {
+			ctx.drawImage(pizzaImage, this.x, this.y, this.size, this.size);
 		}
-
-		item.src = "../images/pizza.png";
-
 	}
 }
 
@@ -409,13 +416,9 @@ class Heart extends Item {
 	}
 
 	drawItem() {
-		let item = new Image();
-
-		item.onload = () => {
-			ctx.drawImage(item, this.x, this.y, this.size, this.size);
+		if (heartImage.ready) {
+			ctx.drawImage(heartImage, this.x, this.y, this.size, this.size);
 		}
-
-		item.src = "../images/heart.png";
 	}
 }
 
