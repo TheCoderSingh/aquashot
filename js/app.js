@@ -22,7 +22,7 @@ const stepMin = 3;
 /************** Functions **************/
 /***************************************/
 const clearScreen = () => {
-	ctx.clearRect(0, 0, gameArea.width, gameArea.height);
+	ctx.clearRect(10, 20, gameArea.width, gameArea.height);
 	redraw();
 };
 
@@ -136,6 +136,10 @@ startGameBtn.addEventListener("click", () => {
 	chosenName = playerNameInput.value;
 	player.init();
 	startEnemies();
+	game.displayLives();
+	game.displayName();
+	game.displayScore();
+	game.displayHighScore();
 });
 
 /***************************************/
@@ -182,6 +186,38 @@ class Game {
 		ctx.fillStyle = "red";
 		ctx.strokeStyle = "black";
 		ctx.fillText(gameOverText, gameArea.width / 2, (gameArea.height / 2) - 100);
+	}
+
+	displayLives = () => {
+		ctx.font = "24px 'Permanent Marker'";
+		ctx.textAlign = "left";
+		ctx.fillStyle = "white";
+		ctx.strokeStyle = "black";
+		ctx.fillText(`Lives: ${player.lives}`, 10, 20);
+	}
+
+	displayName = () => {
+		ctx.font = "24px 'Permanent Marker'";
+		ctx.textAlign = "center";
+		ctx.fillStyle = "white";
+		ctx.strokeStyle = "black";
+		ctx.fillText(player.name, gameArea.width / 2 - 200, 20);
+	}
+
+	displayScore = () => {
+		ctx.font = "24px 'Permanent Marker'";
+		ctx.textAlign = "right";
+		ctx.fillStyle = "white";
+		ctx.strokeStyle = "black";
+		ctx.fillText(`Score: ${player.score}`, gameArea.width - 300, 20);
+	}
+
+	displayHighScore = () => {
+		ctx.font = "24px 'Permanent Marker'";
+		ctx.textAlign = "right";
+		ctx.fillStyle = "white";
+		ctx.strokeStyle = "black";
+		ctx.fillText(`High Score: ${highScore}`, gameArea.width - 30, 20);
 	}
 
 	resetGame = () => {
