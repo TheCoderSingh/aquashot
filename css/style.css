@@ -31,7 +31,7 @@ video {
 	width: 70%;
 	margin: 0 auto;
 	position: absolute;
-	top: 0;
+	top: 40px;
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -82,8 +82,4 @@ video {
 
 #startGameBtn {
 	height: 40px;
-}
-
-canvas {
-	border: 1px solid red;
 }

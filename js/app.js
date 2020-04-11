@@ -22,7 +22,7 @@ const stepMin = 3;
 /************** Functions **************/
 /***************************************/
 const clearScreen = () => {
-	ctx.clearRect(10, 20, gameArea.width, gameArea.height);
+	ctx.clearRect(0, 20, gameArea.width, gameArea.height);
 	redraw();
 };
 
@@ -59,7 +59,7 @@ const startEnemies = () => {
 	setInterval(() => {
 		const prob = Math.floor(Math.random() * 10);
 
-		if (prob < 2) {
+		if (prob < 3) {
 			enemies.push(new Enemy());
 		}
 	}, 800);
@@ -90,6 +90,9 @@ const redraw = () => {
 			alert('You were blown up! You have ' + player.lives + ' lives left.');
 			enemies.splice(i, 1);
 
+			ctx.clearRect(0, 0, gameArea.width, 20);
+			displayLegend();
+
 			if (player.lives === 0) {
 				game.displayGameOverMessage();
 				game.resetGame();
@@ -103,6 +106,13 @@ const redraw = () => {
 			enemies[i].drawEnemy();
 		}
 	}
+}
+
+const displayLegend = () => {
+	game.displayLives();
+	game.displayName();
+	game.displayScore();
+	game.displayHighScore();
 }
 
 /***************************************/
@@ -136,10 +146,7 @@ startGameBtn.addEventListener("click", () => {
 	chosenName = playerNameInput.value;
 	player.init();
 	startEnemies();
-	game.displayLives();
-	game.displayName();
-	game.displayScore();
-	game.displayHighScore();
+	displayLegend();
 });
 
 /***************************************/
@@ -201,7 +208,7 @@ class Game {
 		ctx.textAlign = "center";
 		ctx.fillStyle = "white";
 		ctx.strokeStyle = "black";
-		ctx.fillText(player.name, gameArea.width / 2 - 200, 20);
+		ctx.fillText(chosenName, gameArea.width / 2 - 200, 20);
 	}
 
 	displayScore = () => {
@@ -294,7 +301,7 @@ class Enemy {
 	constructor() {
 		this.size = 100;
 		this.x = Math.floor(Math.random() * (gameArea.width - this.size));
-		this.y = 0;
+		this.y = 15;
 		this.step = Math.floor(Math.random() * (stepMax - stepMin + 1)) + stepMin;
 	}
 
