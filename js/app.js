@@ -71,7 +71,6 @@ const startEnemies = () => {
 
 		clearScreen();
 	}, 100);
-
 }
 
 const redraw = () => {
@@ -92,7 +91,9 @@ const redraw = () => {
 			enemies.splice(i, 1);
 
 			if (player.lives === 0) {
-
+				game.displayGameOverMessage();
+				game.resetGame();
+				break;
 			}
 		}
 
@@ -174,6 +175,24 @@ class Game {
 		ctx.fillStyle = "white";
 		ctx.fillText(playerNameText, gameArea.width / 2, (gameArea.height / 2) - 100);
 	}
+
+	displayGameOverMessage = () => {
+		ctx.font = "4em 'Permanent Marker'";
+		ctx.textAlign = "center";
+		ctx.fillStyle = "red";
+		ctx.strokeStyle = "black";
+		ctx.fillText(gameOverText, gameArea.width / 2, (gameArea.height / 2) - 100);
+	}
+
+	resetGame = () => {
+		enemies = [];
+		characterFlag = 0;
+		nameInputFlag = 0;
+		chosenCharacter = undefined;
+		chosenName = undefined;
+		randomEnemy = undefined;
+		highScore = 0;
+	};
 }
 
 class Player {
