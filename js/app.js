@@ -79,8 +79,11 @@ const startItems = () => {
 	setInterval(() => {
 		const prob = Math.floor(Math.random() * 10);
 
-		if (prob < 2) {
+		if (prob < 4) {
 			items.push(new Item());
+
+			if (prob < 2)
+				items.push(new Heart());
 		}
 	}, 800);
 
@@ -133,7 +136,10 @@ const redraw = () => {
 		let itemSize = items[i].size;
 
 		if (playerPosX < itemPosX + itemSize && playerPosX + playerSize > itemPosX && playerPosY < itemPosY + itemSize && playerPosY + playerSize > itemPosY) {
-			player.score += 5;
+			if (items[i].itemType === "Life")
+				player.lives++;
+			else
+				player.score += 5;
 
 			items.splice(i, 1);
 
@@ -391,12 +397,25 @@ class Item {
 			ctx.drawImage(item, this.x, this.y, this.size, this.size);
 		}
 
-		randomItem = Math.floor(Math.random() * 2) + 1
+		item.src = "../images/pizza.png";
 
-		if (randomItem === 1)
-			item.src = "../images/pizza.png";
-		else if (randomItem === 2)
-			item.src = "../images/pizza.png";
+	}
+}
+
+class Heart extends Item {
+	constructor() {
+		super();
+		this.itemType = "Life";
+	}
+
+	drawItem() {
+		let item = new Image();
+
+		item.onload = () => {
+			ctx.drawImage(item, this.x, this.y, this.size, this.size);
+		}
+
+		item.src = "../images/heart.png";
 	}
 }
 
