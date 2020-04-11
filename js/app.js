@@ -36,6 +36,10 @@ let randomItem;
 let highScore = 0;
 let enemies = [];
 let items = [];
+let createEnemyInterval;
+let moveEnemyInterval;
+let createItemInterval;
+let moveItemInterval;
 
 const stepMax = 3;
 const stepMin = 1;
@@ -78,7 +82,7 @@ const showPlayerNameScreen = () => {
 };
 
 const startEnemies = () => {
-	setInterval(() => {
+	createEnemyInterval = setInterval(() => {
 		const prob = Math.floor(Math.random() * 10);
 
 		if (prob < 3) {
@@ -86,7 +90,7 @@ const startEnemies = () => {
 		}
 	}, 800);
 
-	setInterval(() => {
+	moveEnemyInterval = setInterval(() => {
 		for (let i = 0; i < enemies.length; i++) {
 			enemies[i].moveDown();
 		}
@@ -96,7 +100,7 @@ const startEnemies = () => {
 }
 
 const startItems = () => {
-	setInterval(() => {
+	createItemInterval = setInterval(() => {
 		const prob = Math.floor(Math.random() * 10);
 
 		if (prob < 4) {
@@ -107,13 +111,13 @@ const startItems = () => {
 		}
 	}, 800);
 
-	setInterval(() => {
+	moveItemInterval = setInterval(() => {
 		for (let i = 0; i < items.length; i++) {
 			items[i].moveDown();
 		}
 
 		clearScreen();
-	}, 100);
+	}, 20);
 }
 
 const redraw = () => {
@@ -137,7 +141,13 @@ const redraw = () => {
 			displayLegend();
 
 			if (player.lives === 0) {
+				ctx.clearRect(0, 0, gameArea.width, gameArea.height);
 				game.displayGameOverMessage();
+				clearInterval(createEnemyInterval);
+				clearInterval(moveEnemyInterval);
+				clearInterval(createItemInterval);
+				clearInterval(moveItemInterval);
+				window.removeEventListener();
 				game.resetGame();
 				break;
 			}
