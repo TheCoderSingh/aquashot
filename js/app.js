@@ -12,8 +12,10 @@ let nameInputFlag = 0;
 let chosenCharacter;
 let chosenName;
 let randomEnemy;
+let randomItem;
 let highScore = 0;
 let enemies = [];
+let items = [];
 
 const stepMax = 8;
 const stepMin = 3;
@@ -73,6 +75,24 @@ const startEnemies = () => {
 	}, 100);
 }
 
+const startItems = () => {
+	setInterval(() => {
+		const prob = Math.floor(Math.random() * 10);
+
+		if (prob < 2) {
+			items.push(new Item());
+		}
+	}, 800);
+
+	setInterval(() => {
+		for (let i = 0; i < items.length; i++) {
+			items[i].moveDown();
+		}
+
+		clearScreen();
+	}, 100);
+}
+
 const redraw = () => {
 	player.drawPlayer();
 
@@ -104,6 +124,27 @@ const redraw = () => {
 			enemies.splice(i, 1);
 		} else {
 			enemies[i].drawEnemy();
+		}
+	}
+
+	for (let i = 0; i < items.length; i++) {
+		let itemPosX = items[i].x;
+		let itemPosY = items[i].y;
+		let itemSize = items[i].size;
+
+		if (playerPosX < itemPosX + itemSize && playerPosX + playerSize > itemPosX && playerPosY < itemPosY + itemSize && playerPosY + playerSize > itemPosY) {
+			player.score += 5;
+
+			items.splice(i, 1);
+
+			ctx.clearRect(0, 0, gameArea.width, 20);
+			displayLegend();
+		}
+
+		if (itemPosY >= gameArea.height) {
+			items.splice(i, 1);
+		} else {
+			items[i].drawItem();
 		}
 	}
 }
@@ -146,6 +187,7 @@ startGameBtn.addEventListener("click", () => {
 	chosenName = playerNameInput.value;
 	player.init();
 	startEnemies();
+	startItems();
 	displayLegend();
 });
 
@@ -238,6 +280,7 @@ class Game {
 	};
 }
 
+/**************** Player *****************/
 class Player {
 	constructor(x, y, step, level, score, lives) {
 		this.x = x;
@@ -297,10 +340,13 @@ class Player {
 	}
 }
 
+/**************** Enemies *****************/
 class Enemy {
 	constructor() {
 		this.size = 100;
-		this.x = Math.floor(Math.random() * (gameArea.width - this.size));
+		// this.x = Math.floor(Math.random() * (gameArea.width - this.size));
+		let xPos = Math.floor(Math.floor(Math.random() * 10) + 1);
+		this.x = gameArea.width / 8 * xPos - this.size;
 		this.y = 15;
 		this.step = Math.floor(Math.random() * (stepMax - stepMin + 1)) + stepMin;
 	}
@@ -322,6 +368,35 @@ class Enemy {
 			enemy.src = "../images/crab.png";
 		else if (randomEnemy === 2)
 			enemy.src = "../images/crab.png";
+	}
+}
+
+/**************** Items *****************/
+class Item {
+	constructor() {
+		this.size = 100;
+		this.x = Math.floor(Math.random() * (gameArea.width - this.size));
+		this.y = 15;
+		this.step = Math.floor(Math.random() * (stepMax - stepMin + 1)) + stepMin;
+	}
+
+	moveDown() {
+		this.y += this.step;
+	}
+
+	drawItem() {
+		let item = new Image();
+
+		item.onload = () => {
+			ctx.drawImage(item, this.x, this.y, this.size, this.size);
+		}
+
+		randomItem = Math.floor(Math.random() * 2) + 1
+
+		if (randomItem === 1)
+			item.src = "../images/pizza.png";
+		else if (randomItem === 2)
+			item.src = "../images/pizza.png";
 	}
 }
 
