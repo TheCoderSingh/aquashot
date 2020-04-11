@@ -37,8 +37,8 @@ let highScore = 0;
 let enemies = [];
 let items = [];
 
-const stepMax = 8;
-const stepMin = 3;
+const stepMax = 3;
+const stepMin = 1;
 
 /***************************************/
 /************** Functions **************/
@@ -92,7 +92,7 @@ const startEnemies = () => {
 		}
 
 		clearScreen();
-	}, 100);
+	}, 20);
 }
 
 const startItems = () => {
@@ -374,6 +374,8 @@ class Enemy {
 		this.x = gameArea.width / 8 * xPos - this.size;
 		this.y = 15;
 		this.step = Math.floor(Math.random() * (stepMax - stepMin + 1)) + stepMin;
+		// this.step = 1;
+		// this.step = Math.floor(Math.random() * 2) + 1;
 	}
 
 	moveDown() {
@@ -384,8 +386,6 @@ class Enemy {
 		if (enemyImage.ready) {
 			ctx.drawImage(enemyImage, this.x, this.y, this.size, this.size);
 		}
-
-		// requestAnimationFrame(this.drawEnemy);
 	}
 }
 
