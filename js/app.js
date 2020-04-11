@@ -11,6 +11,7 @@ let characterFlag = 0;
 let nameInputFlag = 0;
 let chosenCharacter;
 let chosenName;
+let randomEnemy;
 let highScore = 0;
 let enemies = [];
 
@@ -76,8 +77,24 @@ const startEnemies = () => {
 const redraw = () => {
 	player.drawPlayer();
 
+	const playerPosX = player.x;
+	const playerPosY = player.y;
+	const playerSize = player.size;
+
 	for (let i = 0; i < enemies.length; i++) {
+		let enemyPosX = enemies[i].x;
 		let enemyPosY = enemies[i].y;
+		let enemySize = enemies[i].size;
+
+		if (playerPosX < enemyPosX + enemySize && playerPosX + playerSize > enemyPosX && playerPosY < enemyPosY + enemySize && playerPosY + playerSize > enemyPosY) {
+			player.lives--;
+			alert('You were blown up! You have ' + player.lives + ' lives left.');
+			enemies.splice(i, 1);
+
+			if (player.lives === 0) {
+
+			}
+		}
 
 		if (enemyPosY >= gameArea.height) {
 			enemies.splice(i, 1);
@@ -237,7 +254,7 @@ class Enemy {
 			ctx.drawImage(enemy, this.x, this.y, this.size, this.size);
 		}
 
-		let randomEnemy = Math.floor(Math.random() * 2) + 1
+		randomEnemy = Math.floor(Math.random() * 2) + 1
 
 		if (randomEnemy === 1)
 			enemy.src = "../images/crab.png";
