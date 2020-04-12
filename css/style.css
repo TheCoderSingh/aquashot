@@ -38,7 +38,7 @@ video {
 }
 
 /***************************************/
-/************* Play Button *************/
+/*************** Buttons ***************/
 /***************************************/
 .btn {
 	margin: 0 auto;
@@ -49,6 +49,15 @@ video {
 	height: 60px;
 	width: 120px;
 	font-size: 36px;
+}
+
+
+#startGameBtn {
+	height: 40px;
+}
+
+#playAgainBtn {
+	font-size: 18px;
 }
 
 /***************************************/
@@ -78,8 +87,4 @@ video {
 #playerName input {
 	height: 40px;
 	width: 200px;
-}
-
-#startGameBtn {
-	height: 40px;
 }

@@ -3,7 +3,7 @@
 /***************************************/
 const ctx = gameArea.getContext('2d');
 const welcomeText = "Welcome to Aqua Shot";
-const gameOverText = "Game Over";
+const gameOverText = `Game Over`;
 const characterText = "Choose a character";
 const playerNameText = "Enter your name";
 
@@ -29,6 +29,7 @@ char2Image.onload = function () { this.ready = true };
 
 let characterFlag = 0;
 let nameInputFlag = 0;
+let playAgainBtnFlag = 0;
 let chosenCharacter;
 let chosenName;
 let randomEnemy;
@@ -144,7 +145,12 @@ const redraw = () => {
 			if (player.lives === 0) {
 				ctx.clearRect(0, 0, gameArea.width, gameArea.height);
 				onGameOverScreen = 1;
+
+				if (player.score > highScore)
+					highScore = player.score;
+
 				game.displayGameOverMessage();
+				playAgainBtn.style.display = "block";
 				clearInterval(createEnemyInterval);
 				clearInterval(moveEnemyInterval);
 				clearInterval(createItemInterval);
@@ -200,7 +206,7 @@ const displayLegend = () => {
 /***************************************/
 playBtn.addEventListener("click", () => {
 	clearScreen();
-	playBtn.remove();
+	playBtn.style.display = "none";
 	showCharacterScreen();
 
 	toggleCharacters();
@@ -221,7 +227,6 @@ character2.addEventListener("click", () => {
 });
 
 startGameBtn.addEventListener("click", () => {
-
 	chosenName = playerNameInput.value;
 	if (!chosenName)
 		alert("Please enter a name");
@@ -235,16 +240,21 @@ startGameBtn.addEventListener("click", () => {
 	}
 });
 
+playAgainBtn.addEventListener("click", () => {
+	clearScreen();
+	playAgainBtn.style.display = "none";
+	player.lives = 3;
+	startEnemies();
+	startItems();
+	displayLegend();
+})
+
 /***************************************/
 /************ Game Objects *************/
 /***************************************/
 
 /**************** Game *****************/
 class Game {
-	constructor() {
-
-	}
-
 	displayWelcomeMessage = () => {
 		ctx.font = "4em 'Permanent Marker'";
 		ctx.textAlign = "center";
@@ -315,12 +325,11 @@ class Game {
 
 	resetGame = () => {
 		enemies = [];
+		items = [];
 		characterFlag = 0;
 		nameInputFlag = 0;
-		chosenCharacter = undefined;
-		chosenName = undefined;
-		randomEnemy = undefined;
-		highScore = 0;
+		onGameOverScreen = 0;
+		player.score = 0;
 	};
 }
 
@@ -333,7 +342,7 @@ class Player {
 		this.level = level;
 		this.score = score;
 		this.lives = lives;
-		this.size = 100;
+		this.size = 80;
 	}
 
 	drawPlayer() {
@@ -392,10 +401,8 @@ class Enemy {
 		// this.x = Math.floor(Math.random() * (gameArea.width - this.size));
 		let xPos = Math.floor(Math.floor(Math.random() * 10) + 1);
 		this.x = gameArea.width / 8 * xPos - this.size;
-		this.y = 15;
+		this.y = 25;
 		this.step = Math.floor(Math.random() * (stepMax - stepMin + 1)) + stepMin;
-		// this.step = 1;
-		// this.step = Math.floor(Math.random() * 2) + 1;
 	}
 
 	moveDown() {
@@ -414,7 +421,7 @@ class Item {
 	constructor() {
 		this.size = 60;
 		this.x = Math.floor(Math.random() * (gameArea.width - this.size));
-		this.y = 15;
+		this.y = 25;
 		this.step = Math.floor(Math.random() * (stepMax - stepMin + 1)) + stepMin;
 	}
 
@@ -445,4 +452,6 @@ class Heart extends Item {
 let game = new Game();
 game.displayWelcomeMessage();
 
-let player = new Player(400, 470, 5, 1, 0, 3);
+let player = new Player(400, 420, 5, 1, 0, 3);
+
+playAgainBtn.style.display = "none";
