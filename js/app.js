@@ -8,23 +8,23 @@ const characterText = "Choose a character";
 const playerNameText = "Enter your name";
 
 let enemyImage = new Image();
-enemyImage.src = "../images/crab.png";
+enemyImage.src = "images/crab.png";
 enemyImage.onload = function () { this.ready = true };
 
 let pizzaImage = new Image();
-pizzaImage.src = "../images/pizza.png";
+pizzaImage.src = "images/pizza.png";
 pizzaImage.onload = function () { this.ready = true };
 
 let heartImage = new Image();
-heartImage.src = "../images/heart.png";
+heartImage.src = "images/heart.png";
 heartImage.onload = function () { this.ready = true };
 
 let char1Image = new Image();
-char1Image.src = "../images/character1.png";
+char1Image.src = "images/character1.png";
 char1Image.onload = function () { this.ready = true };
 
 let char2Image = new Image();
-char2Image.src = "../images/character2.png";
+char2Image.src = "images/character2.png";
 char2Image.onload = function () { this.ready = true };
 
 let characterFlag = 0;
@@ -285,7 +285,6 @@ class Game {
 		ctx.font = "4em 'Permanent Marker'";
 		ctx.textAlign = "center";
 		ctx.fillStyle = "red";
-		ctx.strokeStyle = "black";
 		ctx.fillText(gameOverText, gameArea.width / 2, (gameArea.height / 2) - 100);
 	}
 
