@@ -221,13 +221,18 @@ character2.addEventListener("click", () => {
 });
 
 startGameBtn.addEventListener("click", () => {
-	clearScreen();
-	toggleNameInput();
+
 	chosenName = playerNameInput.value;
-	player.init();
-	startEnemies();
-	startItems();
-	displayLegend();
+	if (!chosenName)
+		alert("Please enter a name");
+	else {
+		clearScreen();
+		toggleNameInput();
+		player.init();
+		startEnemies();
+		startItems();
+		displayLegend();
+	}
 });
 
 /***************************************/
