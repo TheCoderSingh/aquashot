@@ -32,8 +32,6 @@ let nameInputFlag = 0;
 let playAgainBtnFlag = 0;
 let chosenCharacter;
 let chosenName;
-let randomEnemy;
-let randomItem;
 let highScore = 0;
 let enemies = [];
 let items = [];
