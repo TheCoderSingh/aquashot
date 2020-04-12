@@ -40,6 +40,7 @@ let createEnemyInterval;
 let moveEnemyInterval;
 let createItemInterval;
 let moveItemInterval;
+let onGameOverScreen = 0;
 
 const stepMax = 3;
 const stepMin = 1;
@@ -48,7 +49,7 @@ const stepMin = 1;
 /************** Functions **************/
 /***************************************/
 const clearScreen = () => {
-	ctx.clearRect(0, 20, gameArea.width, gameArea.height);
+	ctx.clearRect(0, 25, gameArea.width, gameArea.height);
 	redraw();
 };
 
@@ -142,12 +143,12 @@ const redraw = () => {
 
 			if (player.lives === 0) {
 				ctx.clearRect(0, 0, gameArea.width, gameArea.height);
+				onGameOverScreen = 1;
 				game.displayGameOverMessage();
 				clearInterval(createEnemyInterval);
 				clearInterval(moveEnemyInterval);
 				clearInterval(createItemInterval);
 				clearInterval(moveItemInterval);
-				window.removeEventListener();
 				game.resetGame();
 				break;
 			}
@@ -156,7 +157,8 @@ const redraw = () => {
 		if (enemyPosY >= gameArea.height) {
 			enemies.splice(i, 1);
 		} else {
-			enemies[i].drawEnemy();
+			if (enemies[i] !== undefined)
+				enemies[i].drawEnemy();
 		}
 	}
 
@@ -180,7 +182,8 @@ const redraw = () => {
 		if (itemPosY >= gameArea.height) {
 			items.splice(i, 1);
 		} else {
-			items[i].drawItem();
+			if (items[i] !== undefined)
+				items[i].drawItem();
 		}
 	}
 }
@@ -365,6 +368,8 @@ class Player {
 		window.addEventListener(
 			'keydown',
 			function (e) {
+				if (onGameOverScreen)
+					return;
 				if (e.keyCode === 37) {
 					this.moveLeft();
 				} else if (e.keyCode === 39) {
@@ -378,7 +383,7 @@ class Player {
 /**************** Enemies *****************/
 class Enemy {
 	constructor() {
-		this.size = 100;
+		this.size = 60;
 		// this.x = Math.floor(Math.random() * (gameArea.width - this.size));
 		let xPos = Math.floor(Math.floor(Math.random() * 10) + 1);
 		this.x = gameArea.width / 8 * xPos - this.size;
@@ -402,7 +407,7 @@ class Enemy {
 /**************** Items *****************/
 class Item {
 	constructor() {
-		this.size = 100;
+		this.size = 60;
 		this.x = Math.floor(Math.random() * (gameArea.width - this.size));
 		this.y = 15;
 		this.step = Math.floor(Math.random() * (stepMax - stepMin + 1)) + stepMin;
